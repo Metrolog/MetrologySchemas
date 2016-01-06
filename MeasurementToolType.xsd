@@ -42,6 +42,9 @@
 					<xs:documentation>Реквизиты документа, определяющего методы и средства поверки СИ.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
+			<xs:element name="МПИ" type="МПИ"/>
+			<xs:element name="Свидетельство" type="СвидетельствоОбУтвержденииТипаСИ"/>
+			<xs:element name="Партия" type="Партия"/>
 		</xs:all>
 		<xs:attribute name="Номер" type="Номер" use="required"/>
 		<xs:attribute name="Наименование" type="Наименование" use="required"/>
@@ -148,6 +151,39 @@
 	<xs:simpleType name="НаименованиеОрганизации">
 		<xs:annotation>
 			<xs:documentation>Наименование организации.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:whiteSpace value="collapse"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="МПИ">
+		<xs:annotation>
+			<xs:documentation>Сведения о межповерочном интервале СИ. В настоящее время - число полных месяцев.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:positiveInteger">
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:complexType name="СвидетельствоОбУтвержденииТипаСИ">
+		<xs:annotation>
+			<xs:documentation>Реквизиты свидетельства об утверждении типа СИ.</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="Номер" type="НомерСвидетельстваОбУтвержденииТипаСИ" use="required"/>
+	</xs:complexType>
+
+	<xs:simpleType name="НомерСвидетельстваОбУтвержденииТипаСИ">
+		<xs:annotation>
+			<xs:documentation>Номер свидетельства об утверждении типа СИ.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[1-9]\d*(/[1-9]\d*)?"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="Партия">
+		<xs:annotation>
+			<xs:documentation>Объём партии СИ, на которую выдано свидетельство об утверждении типа СИ.</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:string">
 			<xs:whiteSpace value="collapse"/>
