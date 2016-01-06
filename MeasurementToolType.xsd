@@ -5,6 +5,9 @@
 	xmlns="http://csm.nov.ru/schemas/MeasurementToolType.xsd"
 	xmlns:mstns="http://csm.nov.ru/schemas/MeasurementToolType.xsd"
 	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning"
+	version="1.0"
 >
 	<xs:complexType name="Запись">
 		<xs:annotation>
