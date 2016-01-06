@@ -8,41 +8,60 @@
 >
 	<xs:complexType name="Запись">
 		<xs:annotation>
-			<xs:documentation>Данный элемент является представлением записи в Государственном реестре средств измерений (ГРСИ).</xs:documentation>
+			<xs:documentation xml:lang="ru-ru">Данный элемент является представлением записи в Государственном реестре средств измерений (ГРСИ).</xs:documentation>
 		</xs:annotation>
 		<xs:all>
 			<xs:element name="Назначение" type="Назначение" minOccurs="0"/>
 			<xs:element name="Заявитель" type="Организация" minOccurs="0">
 				<xs:annotation>
-					<xs:documentation>Наименование и контактные координаты организации или индивидуального предпринимателя, подавших сведения на регистрацию СИ в ГРСИ.</xs:documentation>
+					<xs:documentation xml:lang="ru-ru">Наименование и контактные координаты организации или индивидуального предпринимателя, подавших сведения на регистрацию СИ в ГРСИ.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="Изготовитель" type="Организация" minOccurs="0">
 				<xs:annotation>
-					<xs:documentation>Наименование и контактные координаты организации или индивидуального предпринимателя, осуществляющих производство СИ.</xs:documentation>
+					<xs:documentation xml:lang="ru-ru">Наименование и контактные координаты организации или индивидуального предпринимателя, осуществляющих производство СИ.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="ИспытанияПровёл" type="Организация" minOccurs="0">
 				<xs:annotation>
-					<xs:documentation>Наименование и контактные координаты организации, проводившей испытания СИ с целью утверждения типа СИ.</xs:documentation>
+					<xs:documentation xml:lang="ru-ru">Наименование и контактные координаты организации, проводившей испытания СИ с целью утверждения типа СИ.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="УтверждёнДокументом" type="Документ" minOccurs="0">
 				<xs:annotation>
-					<xs:documentation>Реквизиты документа, утверждающего тип СИ.</xs:documentation>
+					<xs:documentation xml:lang="ru-ru">Реквизиты документа, утверждающего тип СИ.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="ТУ" type="Документ" minOccurs="0">
 				<xs:annotation>
-					<xs:documentation>Реквизиты документа, определяющего требования к выпускаемым СИ (технические условия, государственный стандарт и т.п.).</xs:documentation>
+					<xs:documentation xml:lang="ru-ru">Реквизиты документа, определяющего требования к выпускаемым СИ (технические условия, государственный стандарт и т.п.).</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="МетодикаПоверки" type="Документ">
-				<xs:annotation>
-					<xs:documentation>Реквизиты документа, определяющего методы и средства поверки СИ.</xs:documentation>
-				</xs:annotation>
+			<xs:element name="Поверка">
+				<xs:complexType>
+					<xs:all>
+						<xs:element name="МетодикаПоверки" type="Документ">
+							<xs:annotation>
+								<xs:documentation xml:lang="ru-ru">Реквизиты документа, определяющего методы и средства поверки СИ.</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:all>
+					<xs:attribute name="ПодлежитПериодическойПоверке" type="xs:boolean" default="true" use="optional">
+						<xs:annotation>
+							<xs:documentation xml:lang="ru-ru">true, если СИ подлежит периодической поверке. false, если не подлежит.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="МПИ" use="required">
+						<xs:annotation>
+							<xs:documentation xml:lang="ru-ru">Межповерочный интервал (число полных месяцев).</xs:documentation>
+						</xs:annotation>
+						<xs:simpleType>
+							<xs:restriction base="xs:positiveInteger">
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:attribute>
+				</xs:complexType>
 			</xs:element>
-			<xs:element name="МПИ" type="МПИ"/>
 			<xs:element name="Свидетельство" type="СвидетельствоОбУтвержденииТипаСИ"/>
 			<xs:element name="Партия" type="Партия"/>
 		</xs:all>
@@ -56,91 +75,87 @@
 	
 	<xs:simpleType name="Номер">
 		<xs:annotation>
-			<xs:documentation>Номер типа СИ в ГРСИ.</xs:documentation>
+			<xs:documentation xml:lang="ru-ru">Номер типа СИ в ГРСИ.</xs:documentation>
 		</xs:annotation>
-		<xs:restriction base="xs:string">
+		<xs:restriction base="xs:normalizedString">
 			<xs:pattern value="\d+-\d{2}"/>
 		</xs:restriction>
 	</xs:simpleType>
 
 	<xs:simpleType name="Наименование">
 		<xs:annotation>
-			<xs:documentation>Наименование средства измерений.</xs:documentation>
+			<xs:documentation xml:lang="ru-ru">Наименование средства измерений.</xs:documentation>
 		</xs:annotation>
-		<xs:restriction base="xs:string">
-			<xs:whiteSpace value="collapse"/>
+		<xs:restriction base="xs:normalizedString">
 		</xs:restriction>
 	</xs:simpleType>
 
 	<xs:simpleType name="Тип">
 		<xs:annotation>
-			<xs:documentation>Тип средства измерений. Либо перечисление типов (через запятую).</xs:documentation>
+			<xs:documentation xml:lang="ru-ru">Тип средства измерений. Либо перечисление типов (через запятую).</xs:documentation>
 		</xs:annotation>
-		<xs:restriction base="xs:string">
-			<xs:whiteSpace value="collapse"/>
+		<xs:restriction base="xs:normalizedString">
 		</xs:restriction>
 	</xs:simpleType>
 
 	<xs:simpleType name="КлассГРНТИ">
 		<xs:annotation>
-			<xs:documentation>Класс СИ по ГРНТИ.</xs:documentation>
+			<xs:documentation xml:lang="ru-ru">Класс СИ по ГРНТИ.</xs:documentation>
 		</xs:annotation>
 		<!-- Следует разобраться с классификатором и указать нормативный документ для него. -->
-		<xs:restriction base="xs:string">
+		<xs:restriction base="xs:normalizedString">
 			<xs:pattern value="\d{2}(\.\d{1,2}){0,2}"/>
 		</xs:restriction>
 	</xs:simpleType>
 
 	<xs:simpleType name="КодПоМИ2803">
 		<xs:annotation>
-			<xs:documentation>Код СИ по МИ2803.</xs:documentation>
+			<xs:documentation xml:lang="ru-ru">Код СИ по МИ2803.</xs:documentation>
 		</xs:annotation>
-		<xs:restriction base="xs:string">
+		<xs:restriction base="xs:normalizedString">
 			<xs:pattern value="\d{4}"/>
 		</xs:restriction>
 	</xs:simpleType>
 
 	<xs:simpleType name="Назначение">
 		<xs:annotation>
-			<xs:documentation>Назначение и область применения средства измерений.</xs:documentation>
+			<xs:documentation xml:lang="ru-ru">Назначение и область применения средства измерений.</xs:documentation>
 		</xs:annotation>
-		<xs:restriction base="xs:string">
+		<xs:restriction base="xs:normalizedString">
 		</xs:restriction>
 	</xs:simpleType>
 
 	<xs:simpleType name="Документ">
 		<xs:annotation>
-			<xs:documentation>Реквизиты документа.</xs:documentation>
+			<xs:documentation xml:lang="ru-ru">Реквизиты документа.</xs:documentation>
 		</xs:annotation>
 		<!-- Не самое лучшее решение.
 		В дальнейшем стоит предусмотреть раздельное хранение вида документа, его кода по классификатору,
 		регистрационного номера и даты регистрации. -->
-		<xs:restriction base="xs:string">
-			<xs:whiteSpace value="collapse"/>
+		<xs:restriction base="xs:normalizedString">
 		</xs:restriction>
 	</xs:simpleType>
 
 	<xs:simpleType name="Страна">
 		<xs:annotation>
-			<xs:documentation>Наименование страны, в которой зарегистрирован производитель СИ.</xs:documentation>
+			<xs:documentation xml:lang="ru-ru">Наименование страны, в которой зарегистрирован производитель СИ.</xs:documentation>
 		</xs:annotation>
-		<xs:restriction base="xs:string">
+		<xs:restriction base="xs:normalizedString">
 			<xs:enumeration value="Россия"/>
 		</xs:restriction>
 	</xs:simpleType>
 
 	<xs:simpleType name="Регион">
 		<xs:annotation>
-			<xs:documentation>Наименование региона страны, в котором зарегистрирован производитель СИ.</xs:documentation>
+			<xs:documentation xml:lang="ru-ru">Наименование региона страны, в котором зарегистрирован производитель СИ.</xs:documentation>
 		</xs:annotation>
-		<xs:restriction base="xs:string">
-			<xs:whiteSpace value="collapse"/>
+		<xs:restriction base="xs:normalizedString">
 		</xs:restriction>
 	</xs:simpleType>
 
 	<xs:complexType name="Организация">
 		<xs:annotation>
-			<xs:documentation>Наименование и контактные координаты организации или индивидуального предпринимателя.</xs:documentation>
+			<xs:documentation xml:lang="ru-ru">Наименование и контактные координаты организации или индивидуального предпринимателя.</xs:documentation>
 		</xs:annotation>
 		<!-- Не самое лучшее решение. В дальнейшем стоит предусмотреть различные способы указания Заявителя и Производителя, в том числе - и через Страну / ОГРН(ИП) (или аналог) -->
 		<xs:attribute name="Наименование" type="НаименованиеОрганизации" use="required"/>
@@ -150,31 +165,22 @@
 
 	<xs:simpleType name="НаименованиеОрганизации">
 		<xs:annotation>
-			<xs:documentation>Наименование организации.</xs:documentation>
+			<xs:documentation xml:lang="ru-ru">Наименование организации.</xs:documentation>
 		</xs:annotation>
-		<xs:restriction base="xs:string">
-			<xs:whiteSpace value="collapse"/>
-		</xs:restriction>
-	</xs:simpleType>
-
-	<xs:simpleType name="МПИ">
-		<xs:annotation>
-			<xs:documentation>Сведения о межповерочном интервале СИ. В настоящее время - число полных месяцев.</xs:documentation>
-		</xs:annotation>
-		<xs:restriction base="xs:positiveInteger">
+		<xs:restriction base="xs:normalizedString">
 		</xs:restriction>
 	</xs:simpleType>
 
 	<xs:complexType name="СвидетельствоОбУтвержденииТипаСИ">
 		<xs:annotation>
-			<xs:documentation>Реквизиты свидетельства об утверждении типа СИ.</xs:documentation>
+			<xs:documentation xml:lang="ru-ru">Реквизиты свидетельства об утверждении типа СИ.</xs:documentation>
 		</xs:annotation>
 		<xs:attribute name="Номер" type="НомерСвидетельстваОбУтвержденииТипаСИ" use="required"/>
 	</xs:complexType>
 
 	<xs:simpleType name="НомерСвидетельстваОбУтвержденииТипаСИ">
 		<xs:annotation>
-			<xs:documentation>Номер свидетельства об утверждении типа СИ.</xs:documentation>
+			<xs:documentation xml:lang="ru-ru">Номер свидетельства об утверждении типа СИ.</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:string">
 			<xs:pattern value="[1-9]\d*(/[1-9]\d*)?"/>
@@ -183,10 +189,9 @@
 
 	<xs:simpleType name="Партия">
 		<xs:annotation>
-			<xs:documentation>Объём партии СИ, на которую выдано свидетельство об утверждении типа СИ.</xs:documentation>
+			<xs:documentation xml:lang="ru-ru">Объём партии СИ, на которую выдано свидетельство об утверждении типа СИ.</xs:documentation>
 		</xs:annotation>
-		<xs:restriction base="xs:string">
-			<xs:whiteSpace value="collapse"/>
+		<xs:restriction base="xs:normalizedString">
 		</xs:restriction>
 	</xs:simpleType>
 
