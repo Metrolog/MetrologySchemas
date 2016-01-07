@@ -2,13 +2,20 @@
 <xs:schema
 	targetNamespace="http://csm.nov.ru/schemas/MeasurementToolType.xsd"
 	elementFormDefault="qualified"
+	attributeFormDefault="unqualified"
 	xmlns="http://csm.nov.ru/schemas/MeasurementToolType.xsd"
 	xmlns:mstns="http://csm.nov.ru/schemas/MeasurementToolType.xsd"
 	xmlns:xs="http://www.w3.org/2001/XMLSchema"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning"
+	xmlns:refs="http://csm.nov.ru/schemas/BibliographicReference.xsd"
 	version="1.0"
 >
+	<xs:annotation>
+		<xs:documentation xml:lang="ru-ru">Схема записи о типе СИ в ГРСИ.</xs:documentation>
+	</xs:annotation>
+
+	<xs:import namespace="http://csm.nov.ru/schemas/BibliographicReference.xsd" schemaLocation="BibliographicReference.xsd"/>
+
 	<xs:complexType name="Запись">
 		<xs:annotation>
 			<xs:documentation xml:lang="ru-ru">Данный элемент является представлением записи в Государственном реестре средств измерений (ГРСИ).</xs:documentation>
@@ -30,12 +37,12 @@
 					<xs:documentation xml:lang="ru-ru">Наименование и контактные координаты организации, проводившей испытания СИ с целью утверждения типа СИ.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="УтверждёнДокументом" type="Документ" minOccurs="0">
+			<xs:element name="УтверждёнДокументом" type="refs:Ссылка" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation xml:lang="ru-ru">Реквизиты документа, утверждающего тип СИ.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="ТУ" type="Документ" minOccurs="0">
+			<xs:element name="ТУ" type="refs:Ссылка" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation xml:lang="ru-ru">Реквизиты документа, определяющего требования к выпускаемым СИ (технические условия, государственный стандарт и т.п.).</xs:documentation>
 				</xs:annotation>
@@ -43,7 +50,7 @@
 			<xs:element name="Поверка">
 				<xs:complexType>
 					<xs:all>
-						<xs:element name="МетодикаПоверки" type="Документ">
+						<xs:element name="МетодикаПоверки" type="refs:Ссылка">
 							<xs:annotation>
 								<xs:documentation xml:lang="ru-ru">Реквизиты документа, определяющего методы и средства поверки СИ.</xs:documentation>
 							</xs:annotation>
@@ -124,17 +131,6 @@
 		<xs:annotation>
 			<xs:documentation xml:lang="ru-ru">Назначение и область применения средства измерений.</xs:documentation>
 		</xs:annotation>
-		<xs:restriction base="xs:normalizedString">
-		</xs:restriction>
-	</xs:simpleType>
-
-	<xs:simpleType name="Документ">
-		<xs:annotation>
-			<xs:documentation xml:lang="ru-ru">Реквизиты документа.</xs:documentation>
-		</xs:annotation>
-		<!-- Не самое лучшее решение.
-		В дальнейшем стоит предусмотреть раздельное хранение вида документа, его кода по классификатору,
-		регистрационного номера и даты регистрации. -->
 		<xs:restriction base="xs:normalizedString">
 		</xs:restriction>
 	</xs:simpleType>

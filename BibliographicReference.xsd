@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema
+	targetNamespace="http://csm.nov.ru/schemas/BibliographicReference.xsd"
+	elementFormDefault="qualified"
+	attributeFormDefault="unqualified"
+	xmlns="http://csm.nov.ru/schemas/BibliographicReference.xsd"
+	xmlns:mstns="http://csm.nov.ru/schemas/BibliographicReference.xsd"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning"
+	version="1.0"
+>
+	<xs:annotation>
+		<xs:documentation xml:lang="ru-ru">Определения типов для описания библиографических ссылок в соответствии с ГОСТ Р 7.0.5-2008.</xs:documentation>
+	</xs:annotation>
+
+	<xs:complexType name="Ссылка">
+		<xs:annotation>
+			<xs:documentation xml:lang="ru-ru">Библиографическая ссылка (по ГОСТ Р 7.0.5).</xs:documentation>
+		</xs:annotation>
+		<xs:choice>
+			<xs:element name="Ссылка" type="xs:normalizedString">
+				<xs:annotation>
+					<xs:documentation xml:lang="ru-ru">Текстовая неструктурированная библиографическая ссылка. Сохранена для совместимости, к применению не рекомендуется.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:choice>
+	</xs:complexType>
+</xs:schema>
