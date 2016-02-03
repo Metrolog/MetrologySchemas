@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<test
+	xmlns:v="http://csm.nov.ru/schemas/QuantityValue.xsd"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+		http://csm.nov.ru/schemas/QuantityValue.xsd ../QuantityValue.xsd
+	"
+>
+	<ТестовоеЗначениеВеличины xsi:type="v:ЗначениеВеличины">
+		<v:ПростоеЗначениеВеличины>
+			<v:Значение Мантисса="0.5"/>
+		</v:ПростоеЗначениеВеличины>
+		<v:ПростоеЗначениеВеличины>
+			<v:Значение Мантисса="0.2" Порядок="-4"/>
+		</v:ПростоеЗначениеВеличины>
+	</ТестовоеЗначениеВеличины>
+</test>
