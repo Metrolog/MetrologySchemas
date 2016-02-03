@@ -1,17 +1,31 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <test
-	xmlns:v="http://csm.nov.ru/schemas/QuantityValue.xsd"
+	xmlns:qv="http://csm.nov.ru/schemas/QuantityValue.xsd"
+	xmlns:u="http://csm.nov.ru/schemas/MeasurementUnit.xsd"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="
-		http://csm.nov.ru/schemas/QuantityValue.xsd ../QuantityValue.xsd
+		http://csm.nov.ru/schemas/QuantityValue.xsd           ../QuantityValue.xsd
+		http://csm.nov.ru/schemas/MeasurementUnit.xsd         ../MeasurementUnit.xsd
 	"
 >
-	<ТестовоеЗначениеВеличины xsi:type="v:ЗначениеВеличины">
-		<v:ПростоеЗначениеВеличины>
-			<v:Значение Мантисса="0.5"/>
-		</v:ПростоеЗначениеВеличины>
-		<v:ПростоеЗначениеВеличины>
-			<v:Значение Мантисса="0.2" Порядок="-4"/>
-		</v:ПростоеЗначениеВеличины>
+	<ТестовоеЗначениеВеличины xsi:type="qv:ЗначениеВеличины">
+		<qv:ПростоеЗначениеВеличины Мантисса="0.5"/>
+	</ТестовоеЗначениеВеличины>
+
+	<ТестовоеЗначениеВеличины xsi:type="qv:ЗначениеВеличины">
+		<qv:ПростоеЗначениеВеличины Мантисса="0.2" Порядок="-4">
+			<qv:ЕдиницаВеличины>
+				<u:ЕдиницаВеличины>
+					<u:ЕИ lang="ru">кг</u:ЕИ>
+				</u:ЕдиницаВеличины>
+				<u:ЕдиницаВеличины>
+					<u:ЕИ lang="ru">м</u:ЕИ>
+				</u:ЕдиницаВеличины>
+				<u:ЕдиницаВеличины Размерность="-2">
+					<u:ЕИ lang="ru">с</u:ЕИ>
+					<u:ЕИ lang="en">s</u:ЕИ>
+				</u:ЕдиницаВеличины>
+			</qv:ЕдиницаВеличины>
+		</qv:ПростоеЗначениеВеличины>
 	</ТестовоеЗначениеВеличины>
 </test>

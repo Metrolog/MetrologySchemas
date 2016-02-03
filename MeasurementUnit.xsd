@@ -1,0 +1,80 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema
+	targetNamespace="http://csm.nov.ru/schemas/MeasurementUnit.xsd"
+	elementFormDefault="qualified"
+	attributeFormDefault="unqualified"
+	xmlns="http://csm.nov.ru/schemas/MeasurementUnit.xsd"
+	xmlns:mstns="http://csm.nov.ru/schemas/MeasurementUnit.xsd"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning"
+	version="1.0"
+	xsi:schemaLocation="
+		http://csm.nov.ru/schemas/MeasurementUnit.xsd MeasurementUnit.xsd
+	"
+>
+	<xs:annotation>
+		<xs:documentation xml:lang="ru-ru">Определения типов для представления единиц величин (по РМГ 29).</xs:documentation>
+	</xs:annotation>
+
+	<xs:simpleType name="ОбозначениеСистемнойЕдиницыВеличины">
+		<xs:annotation>
+			<xs:documentation xml:lang="ru-ru">Обозначение одной из системных либо производных единиц величин, из кратных и дольных, без указания страны / языка.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="10"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:complexType name="СистемнаяЕдиницаВеличины">
+		<xs:annotation>
+			<xs:documentation xml:lang="ru-ru">Одна из системных либо производных единиц величин, из кратных и дольных, с указанием страны / языка.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="ОбозначениеСистемнойЕдиницыВеличины">
+				<xs:attribute name="lang" type="xs:language" default="ru" use="optional">
+					<xs:annotation>
+						<xs:documentation xml:lang="ru-ru">Язык, на котором указано обозначение единицы величины (ru, en).</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+
+	<xs:simpleType name="РазмерностьЕдиницыВеличины">
+		<xs:annotation>
+			<xs:documentation xml:lang="ru-ru">Размерность (степень) единицы величины (для м^2 - 2, для 1/c - минус 1, для мин. - 0).</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:integer">
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:complexType name="СистемнаяСУчётомРазмерностиЕдиницаВеличины">
+		<xs:annotation>
+			<xs:documentation xml:lang="ru-ru">Одна из системных либо производных единиц величин, из кратных и дольных, с указанием размерности единицы (степени).</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ЕИ" type="СистемнаяЕдиницаВеличины" maxOccurs="2">
+				<xs:annotation>
+					<xs:documentation xml:lang="ru-ru">Одна из системных либо производных единиц величин, из кратных и дольных.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="Размерность" type="РазмерностьЕдиницыВеличины" default="0" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="ru-ru">Размерность (степень) единицы величины (для м^2 - 2, для 1/c - минус 1, для мин. - 0).</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+
+	<xs:complexType name="ЕдиницаВеличины">
+		<xs:annotation>
+			<xs:documentation xml:lang="ru-ru">Единица величины.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ЕдиницаВеличины" type="СистемнаяСУчётомРазмерностиЕдиницаВеличины" minOccurs="1" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+
+</xs:schema>

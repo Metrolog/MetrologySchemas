@@ -9,13 +9,17 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning"
 	version="1.0"
+	xmlns:u="http://csm.nov.ru/schemas/MeasurementUnit.xsd"
 	xsi:schemaLocation="
-		http://csm.nov.ru/schemas/QuantityValue.xsd http://csm.nov.ru/schemas/QuantityValue.xsd
+		http://csm.nov.ru/schemas/QuantityValue.xsd         QuantityValue.xsd
+		http://csm.nov.ru/schemas/MeasurementUnit.xsd       MeasurementUnit.xsd
 	"
 >
 	<xs:annotation>
 		<xs:documentation xml:lang="ru-ru">Определения типов для представления значений величин (по РМГ 29).</xs:documentation>
 	</xs:annotation>
+
+	<xs:import namespace="http://csm.nov.ru/schemas/MeasurementUnit.xsd" schemaLocation="MeasurementUnit.xsd"/>
 
 	<xs:simpleType name="Мантисса">
 		<xs:annotation>
@@ -47,9 +51,13 @@
 		<xs:annotation>
 			<xs:documentation xml:lang="ru-ru">Значение величины (1 км, 1 м/с^2).</xs:documentation>
 		</xs:annotation>
-		<xs:sequence>
-			<xs:element name="Значение" type="ЧислоВНормальнойФорме"/>
-		</xs:sequence>
+		<xs:complexContent>
+			<xs:extension base="ЧислоВНормальнойФорме">
+				<xs:sequence>
+					<xs:element name="ЕдиницаВеличины" type="u:ЕдиницаВеличины" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
 	</xs:complexType>
 
 	<xs:complexType name="ЗначениеВеличины">
