@@ -43,4 +43,12 @@
 		<xs:attribute name="Порядок" type="Порядок" use="optional" default="0"/>
 	</xs:complexType>
 
+	<xs:complexType name="Коэффициент">
+		<xs:annotation>
+			<xs:documentation xml:lang="ru-ru">Коэффициент в нормальной форме. По умолчанию = 1.</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="Мантисса" type="Мантисса" use="optional" default="1"/>
+		<xs:attribute name="Порядок" type="Порядок" use="optional" default="0"/>
+	</xs:complexType>
+
 </xs:schema>

@@ -81,7 +81,7 @@
 											<xs:documentation xml:lang="ru-ru">Одна из основных / когерентных единиц величин.</xs:documentation>
 										</xs:annotation>
 									</xs:element>
-									<xs:element name="Коэффициент" type="v:ЧислоВНормальнойФорме">
+									<xs:element name="Коэффициент" type="v:Коэффициент">
 										<xs:annotation>
 											<xs:documentation xml:lang="ru-ru">Коэффициент в нормальной форме, связывающий кратную / дольную единицу величины с когерентной / основной единицей величины.</xs:documentation>
 										</xs:annotation>
