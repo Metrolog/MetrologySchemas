@@ -73,7 +73,15 @@
 			<xs:documentation xml:lang="ru-ru">Единица величины.</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="ЕдиницаВеличины" type="СистемнаяСУчётомРазмерностиЕдиницаВеличины" minOccurs="1" maxOccurs="unbounded"/>
+			<xs:element name="ЕдиницаВеличины" type="СистемнаяСУчётомРазмерностиЕдиницаВеличины" minOccurs="1" maxOccurs="unbounded">
+				<xs:unique name="УникальныйЯзыкДляКаждогоОбозначенияЕИ">
+					<xs:annotation>
+						<xs:documentation xml:lang="ru-ru">В случае указания нескольких обозначения должен быть указан язык (lang) и он должен быть уникальным.</xs:documentation>
+					</xs:annotation>
+					<xs:selector xpath="mstns:ЕИ"/>
+					<xs:field xpath="@lang"/>
+				</xs:unique>
+			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
 
