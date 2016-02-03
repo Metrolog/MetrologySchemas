@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{D5FED62A-ABFE-4EF4-9599-444AC3021670}"
 	ProjectSection(SolutionItems) = preProject
@@ -12,6 +12,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		MeasurementUnit.xsd = MeasurementUnit.xsd
 		QuantityDimension.xsd = QuantityDimension.xsd
 		QuantityValue.xsd = QuantityValue.xsd
+		Value.xsd = Value.xsd
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "xml", "xml", "{AA1E5BE8-FA83-4E6B-9A5A-B6D41655D632}"

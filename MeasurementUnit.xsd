@@ -9,13 +9,17 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning"
 	version="1.0"
+	xmlns:v="http://csm.nov.ru/schemas/Value.xsd"
 	xsi:schemaLocation="
-		http://csm.nov.ru/schemas/MeasurementUnit.xsd MeasurementUnit.xsd
+		http://csm.nov.ru/schemas/Value.xsd                 Value.xsd
+		http://csm.nov.ru/schemas/MeasurementUnit.xsd       MeasurementUnit.xsd
 	"
 >
 	<xs:annotation>
 		<xs:documentation xml:lang="ru-ru">Определения типов для представления единиц величин (по РМГ 29).</xs:documentation>
 	</xs:annotation>
+
+	<xs:import namespace="http://csm.nov.ru/schemas/Value.xsd" schemaLocation="Value.xsd"/>
 
 	<xs:simpleType name="ОбозначениеЕдиницыВеличины">
 		<xs:annotation>
@@ -65,6 +69,25 @@
 							<xs:annotation>
 								<xs:documentation xml:lang="ru-ru">Одна из системных либо производных единиц величин, из кратных и дольных.</xs:documentation>
 							</xs:annotation>
+						</xs:element>
+						<xs:element name="КогерентнаяЕдиницаВеличины" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation xml:lang="ru-ru">Когеретная / основная единица величины для кратных и дольных.</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="Обозначение" type="СистемнаяЕдиницаВеличины" maxOccurs="unbounded">
+										<xs:annotation>
+											<xs:documentation xml:lang="ru-ru">Одна из основных / когерентных единиц величин.</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element name="Коэффициент" type="v:ЧислоВНормальнойФорме">
+										<xs:annotation>
+											<xs:documentation xml:lang="ru-ru">Коэффициент в нормальной форме, связывающий кратную / дольную единицу величины с когерентной / основной единицей величины.</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+								</xs:sequence>
+							</xs:complexType>
 						</xs:element>
 					</xs:sequence>
 					<xs:attribute name="Размерность" type="РазмерностьЕдиницыВеличины" default="0" use="optional">

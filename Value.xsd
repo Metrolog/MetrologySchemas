@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema
+	targetNamespace="http://csm.nov.ru/schemas/Value.xsd"
+	elementFormDefault="qualified"
+	attributeFormDefault="unqualified"
+	xmlns="http://csm.nov.ru/schemas/Value.xsd"
+	xmlns:mstns="http://csm.nov.ru/schemas/Value.xsd"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning"
+	version="1.0"
+	xsi:schemaLocation="
+		http://csm.nov.ru/schemas/Value.xsd                 Value.xsd
+	"
+>
+	<xs:annotation>
+		<xs:documentation xml:lang="ru-ru">Определения типов для представления чисел с плавающей запятой в нормальной форме.</xs:documentation>
+	</xs:annotation>
+
+	<xs:simpleType name="Мантисса">
+		<xs:annotation>
+			<xs:documentation xml:lang="ru-ru">Мантисса числа в нормальной форме.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:decimal">
+			<xs:minInclusive value="-1"/>
+			<xs:maxInclusive value="1"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="Порядок">
+		<xs:annotation>
+			<xs:documentation xml:lang="ru-ru">Порядок числа в нормальной форме.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:integer">
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:complexType name="ЧислоВНормальнойФорме">
+		<xs:annotation>
+			<xs:documentation xml:lang="ru-ru">Число в нормальной форме (0,12*10^-23).</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="Мантисса" type="Мантисса" use="required"/>
+		<xs:attribute name="Порядок" type="Порядок" use="optional" default="0"/>
+	</xs:complexType>
+
+</xs:schema>
