@@ -17,8 +17,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "xml", "xml", "{AA1E5BE8-FA83-4E6B-9A5A-B6D41655D632}"
 	ProjectSection(SolutionItems) = preProject
+		xml\GOST 8.417-2002.xml = xml\GOST 8.417-2002.xml
 		xml\QuantityValue.xml = xml\QuantityValue.xml
-		xml\UnitsSystem.xml = xml\UnitsSystem.xml
 	EndProjectSection
 EndProject
 Global
