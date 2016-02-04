@@ -28,18 +28,40 @@
 		<xs:restriction base="xs:string">
 			<xs:minLength value="1"/>
 			<xs:maxLength value="10"/>
+			<xs:whiteSpace value="collapse"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="НаименованиеЕдиницыВеличины">
+		<xs:annotation>
+			<xs:documentation xml:lang="ru-ru">Наименование единицы величины.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="30"/>
+			<xs:whiteSpace value="collapse"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="ЛокализацияОбозначенияИНаименования">
+		<xs:annotation>
+			<xs:documentation xml:lang="ru-ru">Локализация обозначения и наименования единиц величин.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:language">
+			<xs:enumeration value="ru"/>
+			<xs:enumeration value="en"/>
 		</xs:restriction>
 	</xs:simpleType>
 
 	<xs:complexType name="СистемнаяЕдиницаВеличины">
 		<xs:annotation>
-			<xs:documentation xml:lang="ru-ru">Одна из системных либо производных единиц величин, из кратных и дольных, с указанием страны / языка.</xs:documentation>
+			<xs:documentation xml:lang="ru-ru">Одна из системных либо производных единиц величин, имеющих специальное обозначение, их кратных и дольных, с указанием страны / языка.</xs:documentation>
 		</xs:annotation>
 		<xs:simpleContent>
 			<xs:extension base="ОбозначениеЕдиницыВеличины">
-				<xs:attribute name="lang" type="xs:language" default="ru" use="optional">
+				<xs:attribute name="lang" type="ЛокализацияОбозначенияИНаименования" default="ru" use="optional">
 					<xs:annotation>
-						<xs:documentation xml:lang="ru-ru">Язык, на котором указано обозначение единицы величины (ru, en).</xs:documentation>
+						<xs:documentation xml:lang="ru-ru">Локализация обозначения единицы величины.</xs:documentation>
 					</xs:annotation>
 				</xs:attribute>
 			</xs:extension>
@@ -70,25 +92,6 @@
 								<xs:documentation xml:lang="ru-ru">Одна из системных либо производных единиц величин, из кратных и дольных.</xs:documentation>
 							</xs:annotation>
 						</xs:element>
-						<!--<xs:element name="КогерентнаяЕдиницаВеличины" minOccurs="0">
-							<xs:annotation>
-								<xs:documentation xml:lang="ru-ru">Когеретная / основная единица величины для кратных и дольных.</xs:documentation>
-							</xs:annotation>
-							<xs:complexType>
-								<xs:sequence>
-									<xs:element name="Обозначение" type="СистемнаяЕдиницаВеличины" maxOccurs="unbounded">
-										<xs:annotation>
-											<xs:documentation xml:lang="ru-ru">Одна из основных / когерентных единиц величин.</xs:documentation>
-										</xs:annotation>
-									</xs:element>
-									<xs:element name="Коэффициент" type="v:Коэффициент">
-										<xs:annotation>
-											<xs:documentation xml:lang="ru-ru">Коэффициент в нормальной форме, связывающий кратную / дольную единицу величины с когерентной / основной единицей величины.</xs:documentation>
-										</xs:annotation>
-									</xs:element>
-								</xs:sequence>
-							</xs:complexType>
-						</xs:element>-->
 					</xs:sequence>
 					<xs:attribute name="Размерность" type="РазмерностьЕдиницыВеличины" default="0" use="optional">
 						<xs:annotation>

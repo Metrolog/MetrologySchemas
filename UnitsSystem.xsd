@@ -1,0 +1,123 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema
+	targetNamespace="http://csm.nov.ru/schemas/UnitsSystem.xsd"
+	elementFormDefault="qualified"
+	attributeFormDefault="unqualified"
+	xmlns="http://csm.nov.ru/schemas/UnitsSystem.xsd"
+	xmlns:mstns="http://csm.nov.ru/schemas/UnitsSystem.xsd"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning"
+	version="1.0"
+	xmlns:v="http://csm.nov.ru/schemas/Value.xsd"
+	xmlns:u="http://csm.nov.ru/schemas/MeasurementUnit.xsd"
+	xsi:schemaLocation="
+		http://csm.nov.ru/schemas/Value.xsd                 Value.xsd
+		http://csm.nov.ru/schemas/MeasurementUnit.xsd       MeasurementUnit.xsd
+		http://csm.nov.ru/schemas/UnitsSystem.xsd           UnitsSystem.xsd
+	"
+>
+	<xs:annotation>
+		<xs:documentation xml:lang="ru-ru">Схема системы единиц величин по ГОСТ 8.417.</xs:documentation>
+	</xs:annotation>
+
+	<xs:import namespace="http://csm.nov.ru/schemas/Value.xsd" schemaLocation="Value.xsd"/>
+	<xs:import namespace="http://csm.nov.ru/schemas/MeasurementUnit.xsd" schemaLocation="MeasurementUnit.xsd"/>
+
+	<xs:simpleType name="ТипЕдиницыВеличины">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="основная"/>
+			<xs:enumeration value="когерентная"/>
+			<xs:enumeration value="внесистемная"/>
+			<xs:enumeration value="кратная"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="ПрименимостьЕдиницыВеличины">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="допустима"/>
+			<xs:enumeration value="временно допустима"/>
+			<xs:enumeration value="недопустима"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:complexType name="ОписаниеЕдиницыВеличины">
+		<xs:annotation>
+			<xs:documentation xml:lang="ru-ru">Представление описания единицы величины в справочнике единиц величин, включая взаимосвязи с дольными и кратными единицами величин.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ОбозначенияИНаименования">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="ОбозначениеИНаименование" maxOccurs="unbounded">
+							<xs:complexType>
+								<xs:attribute name="Обозначение" type="u:ОбозначениеЕдиницыВеличины" use="required"/>
+								<xs:attribute name="Наименование" type="u:НаименованиеЕдиницыВеличины" use="optional"/>
+								<xs:attribute name="lang" type="u:ЛокализацияОбозначенияИНаименования" default="ru" use="optional"/>
+							</xs:complexType>
+						</xs:element>
+						<!--<xs:element name="КогерентнаяЕдиницаВеличины" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation xml:lang="ru-ru">Когеретная / основная единица величины для кратных и дольных.</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="Обозначение" type="СистемнаяЕдиницаВеличины" maxOccurs="unbounded">
+										<xs:annotation>
+											<xs:documentation xml:lang="ru-ru">Одна из основных / когерентных единиц величин.</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element name="Коэффициент" type="v:Коэффициент">
+										<xs:annotation>
+											<xs:documentation xml:lang="ru-ru">Коэффициент в нормальной форме, связывающий кратную / дольную единицу величины с когерентной / основной единицей величины.</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>-->
+					</xs:sequence>
+				</xs:complexType>
+				<xs:unique name="УникальнаяЛокализацияОбозначенияЕИ">
+					<xs:selector xpath="mstns:ОбозначениеИНаименование"/>
+					<xs:field xpath="@lang"/>
+				</xs:unique>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="тип" type="ТипЕдиницыВеличины" use="required">
+			<xs:annotation>
+				<xs:documentation xml:lang="ru-ru">Является ли данная единица величины основной, когерентной, дольной/кратной, внесистемной (по РМГ 29).</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="применимость" type="ПрименимостьЕдиницыВеличины" default="допустима" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="ru-ru">Является ли данная единица величины допустимой к применению, временно допустимой, либо недопустимой (по ГОСТ 8.417-2002).</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+
+	<xs:complexType name="СистемаЕдиницВеличин">
+		<xs:annotation>
+			<xs:documentation xml:lang="ru-ru">Представление системы единиц величин, включая взаимосвязи с дольными и кратными единицами величин.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ЕдиницаВеличины" type="ОписаниеЕдиницыВеличины" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:element name="СистемаЕдиницВеличин" type="СистемаЕдиницВеличин">
+		<xs:annotation>
+			<xs:documentation xml:lang="ru-ru">Система единиц величин по ГОСТ 8.417.</xs:documentation>
+		</xs:annotation>
+		<xs:unique name="УникальныеОбозначенияЕИ">
+			<xs:selector xpath="mstns:ЕдиницаВеличины/mstns:ОбозначенияИНаименования/mstns:ОбозначениеИНаименование"/>
+			<xs:field xpath="@lang"/>
+			<xs:field xpath="@Обозначение"/>
+		</xs:unique>
+		<xs:unique name="УникальныеНаименованияЕИ">
+			<xs:selector xpath="mstns:ЕдиницаВеличины/mstns:ОбозначенияИНаименования/mstns:ОбозначениеИНаименование"/>
+			<xs:field xpath="@lang"/>
+			<xs:field xpath="@Наименование"/>
+		</xs:unique>
+	</xs:element>
+
+</xs:schema>
