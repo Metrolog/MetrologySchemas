@@ -26,10 +26,10 @@
 
 	<xs:complexType name="ПростоеЗначениеВеличины">
 		<xs:annotation>
-			<xs:documentation xml:lang="ru-ru">Значение величины (1 км, 1 м/с^2).</xs:documentation>
+			<xs:documentation xml:lang="ru-ru">Значение величины (1 км; 1 м∕с²).</xs:documentation>
 		</xs:annotation>
 		<xs:complexContent>
-			<xs:extension base="v:ЧислоВНормальнойФорме">
+			<xs:extension base="v:Число">
 				<xs:sequence>
 					<xs:element name="ЕдиницаВеличины" type="u:ЕдиницаВеличины" minOccurs="0"/>
 				</xs:sequence>

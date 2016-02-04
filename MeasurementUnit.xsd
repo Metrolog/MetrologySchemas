@@ -48,7 +48,7 @@
 
 	<xs:simpleType name="РазмерностьЕдиницыВеличины">
 		<xs:annotation>
-			<xs:documentation xml:lang="ru-ru">Размерность (степень) единицы величины (для м^2 - 2, для 1/c - минус 1, для мин. - 0).</xs:documentation>
+			<xs:documentation xml:lang="ru-ru">Размерность (степень) единицы величины (для м² - 2, для 1∕c - минус 1, для мин. - 0).</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:integer">
 		</xs:restriction>
@@ -59,10 +59,10 @@
 			<xs:documentation xml:lang="ru-ru">Единица величины.</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="ЕдиницаВеличины" minOccurs="1" maxOccurs="unbounded">
+			<xs:element name="ЕИ" minOccurs="1" maxOccurs="unbounded">
 				<xs:complexType>
 					<xs:annotation>
-						<xs:documentation xml:lang="ru-ru">Одна из системных либо производных единиц величин, из кратных и дольных, с указанием размерности единицы (степени).</xs:documentation>
+						<xs:documentation xml:lang="ru-ru">Одна из системных либо производных единиц величин, имеющих специальное обозначение, их кратных и дольных, с указанием размерности единицы (степени).</xs:documentation>
 					</xs:annotation>
 					<xs:sequence>
 						<xs:element name="Обозначение" type="СистемнаяЕдиницаВеличины" maxOccurs="unbounded">
@@ -70,7 +70,7 @@
 								<xs:documentation xml:lang="ru-ru">Одна из системных либо производных единиц величин, из кратных и дольных.</xs:documentation>
 							</xs:annotation>
 						</xs:element>
-						<xs:element name="КогерентнаяЕдиницаВеличины" minOccurs="0">
+						<!--<xs:element name="КогерентнаяЕдиницаВеличины" minOccurs="0">
 							<xs:annotation>
 								<xs:documentation xml:lang="ru-ru">Когеретная / основная единица величины для кратных и дольных.</xs:documentation>
 							</xs:annotation>
@@ -88,11 +88,11 @@
 									</xs:element>
 								</xs:sequence>
 							</xs:complexType>
-						</xs:element>
+						</xs:element>-->
 					</xs:sequence>
 					<xs:attribute name="Размерность" type="РазмерностьЕдиницыВеличины" default="0" use="optional">
 						<xs:annotation>
-							<xs:documentation xml:lang="ru-ru">Размерность (степень) единицы величины (для м^2 - 2, для 1/c - минус 1, для мин. - 0).</xs:documentation>
+							<xs:documentation xml:lang="ru-ru">Размерность (степень) единицы величины (для м² - 2, для 1∕c - минус 1, для мин - 0).</xs:documentation>
 						</xs:annotation>
 					</xs:attribute>
 				</xs:complexType>

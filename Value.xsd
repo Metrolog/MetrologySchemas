@@ -17,37 +17,114 @@
 		<xs:documentation xml:lang="ru-ru">Определения типов для представления чисел с плавающей запятой в нормальной форме.</xs:documentation>
 	</xs:annotation>
 
-	<xs:simpleType name="Мантисса">
+	<xs:simpleType name="ФорматМантиссы">
 		<xs:annotation>
-			<xs:documentation xml:lang="ru-ru">Мантисса числа в нормальной форме.</xs:documentation>
+			<xs:documentation xml:lang="ru-ru">Формат мантиссы.</xs:documentation>
 		</xs:annotation>
-		<xs:restriction base="xs:decimal">
+		<xs:restriction base="xs:token">
+			<xs:enumeration value="число"/>
+			<xs:enumeration value="TeX"/>
+			<xs:enumeration value="MathML"/>
+			<xs:enumeration value="строка"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:complexType name="Мантисса">
+		<xs:annotation>
+			<xs:documentation xml:lang="ru-ru">Мантисса числа.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="xs:string">
+				<xs:attribute name="формат" type="ФорматМантиссы" default="число" use="optional">
+					<xs:annotation>
+						<xs:documentation xml:lang="ru-ru">Формат описания мантиссы.</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+
+	<xs:simpleType name="МантиссаНормализованная">
+		<xs:annotation>
+			<xs:documentation xml:lang="ru-ru">Мантисса числа нормализованная.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:integer">
 			<xs:minInclusive value="-1"/>
 			<xs:maxInclusive value="1"/>
 		</xs:restriction>
 	</xs:simpleType>
 
+	<xs:complexType name="МантиссаЧисло">
+		<xs:annotation>
+			<xs:documentation xml:lang="ru-ru">Мантисса в форме числа.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="xs:decimal">
+				<xs:attribute name="формат" type="ФорматМантиссы" fixed="число" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+
+	<xs:complexType name="МантиссаСтрока">
+		<xs:annotation>
+			<xs:documentation xml:lang="ru-ru">Мантисса в форме строки (представление мантиссы в формате Unicode).</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="xs:string">
+				<xs:attribute name="формат" type="ФорматМантиссы" fixed="строка" use="required"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+
 	<xs:simpleType name="Порядок">
 		<xs:annotation>
-			<xs:documentation xml:lang="ru-ru">Порядок числа в нормальной форме.</xs:documentation>
+			<xs:documentation xml:lang="ru-ru">Порядок числа.</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:integer">
 		</xs:restriction>
 	</xs:simpleType>
 
+	<xs:complexType name="Число">
+		<xs:annotation>
+			<xs:documentation xml:lang="ru-ru">Ненормализованное число (23; 0,2⋅10⁻⁴; 0,001).</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Число">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Мантисса" type="Мантисса" maxOccurs="unbounded"/>
+					</xs:sequence>
+					<xs:attribute name="Порядок" type="Порядок" use="optional" default="0"/>
+				</xs:complexType>
+				<xs:unique name="УникальностьФорматаМантисс">
+					<xs:selector xpath="mstns:Мантисса"/>
+					<xs:field xpath="@формат"/>
+				</xs:unique>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
 	<xs:complexType name="ЧислоВНормальнойФорме">
 		<xs:annotation>
-			<xs:documentation xml:lang="ru-ru">Число в нормальной форме (0,12*10^-23).</xs:documentation>
+			<xs:documentation xml:lang="ru-ru">Число в нормальной форме (0,12⋅10⁻⁴).</xs:documentation>
 		</xs:annotation>
-		<xs:attribute name="Мантисса" type="Мантисса" use="required"/>
-		<xs:attribute name="Порядок" type="Порядок" use="optional" default="0"/>
+		<xs:sequence>
+			<xs:element name="Число">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Мантисса" type="МантиссаНормализованная"/>
+					</xs:sequence>
+					<xs:attribute name="Порядок" type="Порядок" use="optional" default="0"/>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
 	</xs:complexType>
 
 	<xs:complexType name="Коэффициент">
 		<xs:annotation>
 			<xs:documentation xml:lang="ru-ru">Коэффициент в нормальной форме. По умолчанию = 1.</xs:documentation>
 		</xs:annotation>
-		<xs:attribute name="Мантисса" type="Мантисса" use="optional" default="1"/>
+		<xs:attribute name="Мантисса" type="МантиссаНормализованная" use="optional" default="1"/>
 		<xs:attribute name="Порядок" type="Порядок" use="optional" default="0"/>
 	</xs:complexType>
 
