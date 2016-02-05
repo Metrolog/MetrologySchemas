@@ -41,9 +41,9 @@
 		</xs:restriction>
 	</xs:simpleType>
 
-	<xs:complexType name="ОписаниеЕдиницыВеличины">
+	<xs:complexType name="ЭлементСистемыЕдиниц">
 		<xs:annotation>
-			<xs:documentation xml:lang="ru-ru">Представление описания единицы величины в справочнике единиц величин, включая взаимосвязи с дольными и кратными единицами величин.</xs:documentation>
+			<xs:documentation xml:lang="ru-ru">Представление описания элемента системы единиц величины в справочнике.</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
 			<xs:element name="ОбозначенияИНаименования">
@@ -56,43 +56,45 @@
 								<xs:attribute name="lang" type="u:ЛокализацияОбозначенияИНаименования" default="ru" use="optional"/>
 							</xs:complexType>
 						</xs:element>
-						<!--<xs:element name="КогерентнаяЕдиницаВеличины" minOccurs="0">
-							<xs:annotation>
-								<xs:documentation xml:lang="ru-ru">Когеретная / основная единица величины для кратных и дольных.</xs:documentation>
-							</xs:annotation>
-							<xs:complexType>
-								<xs:sequence>
-									<xs:element name="Обозначение" type="СистемнаяЕдиницаВеличины" maxOccurs="unbounded">
-										<xs:annotation>
-											<xs:documentation xml:lang="ru-ru">Одна из основных / когерентных единиц величин.</xs:documentation>
-										</xs:annotation>
-									</xs:element>
-									<xs:element name="Коэффициент" type="v:Коэффициент">
-										<xs:annotation>
-											<xs:documentation xml:lang="ru-ru">Коэффициент в нормальной форме, связывающий кратную / дольную единицу величины с когерентной / основной единицей величины.</xs:documentation>
-										</xs:annotation>
-									</xs:element>
-								</xs:sequence>
-							</xs:complexType>
-						</xs:element>-->
 					</xs:sequence>
 				</xs:complexType>
-				<xs:unique name="УникальнаяЛокализацияОбозначенияЕИ">
+				<xs:unique name="УникальнаяЛокализацияОбозначенияЭлементаСистемыЕдиниц">
 					<xs:selector xpath="mstns:ОбозначениеИНаименование"/>
 					<xs:field xpath="@lang"/>
 				</xs:unique>
 			</xs:element>
 		</xs:sequence>
-		<xs:attribute name="тип" type="ТипЕдиницыВеличины" use="required">
-			<xs:annotation>
-				<xs:documentation xml:lang="ru-ru">Является ли данная единица величины основной, когерентной, дольной/кратной, внесистемной (по РМГ 29).</xs:documentation>
-			</xs:annotation>
-		</xs:attribute>
-		<xs:attribute name="применимость" type="ПрименимостьЕдиницыВеличины" default="допустима" use="optional">
-			<xs:annotation>
-				<xs:documentation xml:lang="ru-ru">Является ли данная единица величины допустимой к применению, временно допустимой, либо недопустимой (по ГОСТ 8.417-2002).</xs:documentation>
-			</xs:annotation>
-		</xs:attribute>
+	</xs:complexType>
+
+	<xs:complexType name="ЕдиницаВеличины">
+		<xs:annotation>
+			<xs:documentation xml:lang="ru-ru">Представление описания единицы величины в справочнике единиц величин, включая взаимосвязи с дольными и кратными единицами величин.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="ЭлементСистемыЕдиниц">
+				<xs:attribute name="тип" type="ТипЕдиницыВеличины" use="required">
+					<xs:annotation>
+						<xs:documentation xml:lang="ru-ru">Является ли данная единица величины основной, когерентной, дольной/кратной, внесистемной (по РМГ 29).</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="применимость" type="ПрименимостьЕдиницыВеличины" default="допустима" use="optional">
+					<xs:annotation>
+						<xs:documentation xml:lang="ru-ru">Является ли данная единица величины допустимой к применению, временно допустимой, либо недопустимой (по ГОСТ 8.417-2002).</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="ДесятичныйМножитель">
+		<xs:annotation>
+			<xs:documentation xml:lang="ru-ru">Представление десятичного множителя, приставок и их обозначений.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="ЭлементСистемыЕдиниц">
+				<xs:attribute name="Порядок" type="v:Порядок" use="required"/>
+			</xs:extension>
+		</xs:complexContent>
 	</xs:complexType>
 
 	<xs:complexType name="СистемаЕдиницВеличин">
@@ -103,7 +105,7 @@
 			<xs:element name="ЕдиницыВеличин">
 				<xs:complexType>
 					<xs:sequence>
-						<xs:element name="ЕдиницаВеличины" type="ОписаниеЕдиницыВеличины" maxOccurs="unbounded"/>
+						<xs:element name="ЕдиницаВеличины" type="ЕдиницаВеличины" maxOccurs="unbounded"/>
 					</xs:sequence>
 				</xs:complexType>
 				<xs:unique name="УникальныеОбозначенияЕИ">
@@ -113,6 +115,23 @@
 				</xs:unique>
 				<xs:unique name="УникальныеНаименованияЕИ">
 					<xs:selector xpath="mstns:ЕдиницаВеличины/mstns:ОбозначенияИНаименования/mstns:ОбозначениеИНаименование"/>
+					<xs:field xpath="@lang"/>
+					<xs:field xpath="@Наименование"/>
+				</xs:unique>
+			</xs:element>
+			<xs:element name="ДесятичныеМножители" minOccurs ="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="ДесятичныйМножитель" type="ДесятичныйМножитель" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:complexType>
+				<xs:unique name="УникальныеОбозначенияПриставокДесятичныхМножителей">
+					<xs:selector xpath="mstns:ДесятичныйМножитель/mstns:ОбозначенияИНаименования/mstns:ОбозначениеИНаименование"/>
+					<xs:field xpath="@lang"/>
+					<xs:field xpath="@Обозначение"/>
+				</xs:unique>
+				<xs:unique name="УникальныеПриставкиДесятичныхМножителей">
+					<xs:selector xpath="mstns:ДесятичныйМножитель/mstns:ОбозначенияИНаименования/mstns:ОбозначениеИНаименование"/>
 					<xs:field xpath="@lang"/>
 					<xs:field xpath="@Наименование"/>
 				</xs:unique>
