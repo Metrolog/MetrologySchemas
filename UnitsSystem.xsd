@@ -100,7 +100,23 @@
 			<xs:documentation xml:lang="ru-ru">Представление системы единиц величин, включая взаимосвязи с дольными и кратными единицами величин.</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="ЕдиницаВеличины" type="ОписаниеЕдиницыВеличины" maxOccurs="unbounded"/>
+			<xs:element name="ЕдиницыВеличин">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="ЕдиницаВеличины" type="ОписаниеЕдиницыВеличины" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:complexType>
+				<xs:unique name="УникальныеОбозначенияЕИ">
+					<xs:selector xpath="mstns:ЕдиницаВеличины/mstns:ОбозначенияИНаименования/mstns:ОбозначениеИНаименование"/>
+					<xs:field xpath="@lang"/>
+					<xs:field xpath="@Обозначение"/>
+				</xs:unique>
+				<xs:unique name="УникальныеНаименованияЕИ">
+					<xs:selector xpath="mstns:ЕдиницаВеличины/mstns:ОбозначенияИНаименования/mstns:ОбозначениеИНаименование"/>
+					<xs:field xpath="@lang"/>
+					<xs:field xpath="@Наименование"/>
+				</xs:unique>
+			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
 
@@ -108,16 +124,6 @@
 		<xs:annotation>
 			<xs:documentation xml:lang="ru-ru">Система единиц величин по ГОСТ 8.417.</xs:documentation>
 		</xs:annotation>
-		<xs:unique name="УникальныеОбозначенияЕИ">
-			<xs:selector xpath="mstns:ЕдиницаВеличины/mstns:ОбозначенияИНаименования/mstns:ОбозначениеИНаименование"/>
-			<xs:field xpath="@lang"/>
-			<xs:field xpath="@Обозначение"/>
-		</xs:unique>
-		<xs:unique name="УникальныеНаименованияЕИ">
-			<xs:selector xpath="mstns:ЕдиницаВеличины/mstns:ОбозначенияИНаименования/mstns:ОбозначениеИНаименование"/>
-			<xs:field xpath="@lang"/>
-			<xs:field xpath="@Наименование"/>
-		</xs:unique>
 	</xs:element>
 
 </xs:schema>
