@@ -27,7 +27,7 @@
 
 	<xsl:template match="/us:СистемаЕдиницВеличин/us:ЕдиницыВеличин/us:ЕдиницаВеличины/us:КратныеЕдиницыВеличин"/>
 
-	<xsl:template match="/us:СистемаЕдиницВеличин/us:ЕдиницыВеличин/us:ЕдиницаВеличины">
+	<xsl:template match="/us:СистемаЕдиницВеличин/us:ЕдиницыВеличин/us:ЕдиницаВеличины[not(@безКратных)]">
 		<xsl:copy>
 			<xsl:apply-templates select="@* | node() | text() | processing-instruction() | comment()"/>
 			<xsl:variable name="ОбозначенияИНаименованияЕВ" select="./us:ОбозначенияИНаименования/us:ОбозначениеИНаименование"/>

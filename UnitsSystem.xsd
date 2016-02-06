@@ -82,6 +82,11 @@
 						<xs:documentation xml:lang="ru-ru">Является ли данная единица величины допустимой к применению, временно допустимой, либо недопустимой (по ГОСТ 8.417-2002).</xs:documentation>
 					</xs:annotation>
 				</xs:attribute>
+				<xs:attribute name="безКратных" type="xs:boolean" default="false" use="optional">
+					<xs:annotation>
+						<xs:documentation xml:lang="ru-ru">Допускаются ли для данной единицы величины кратные и дольные единицы.</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
 			</xs:extension>
 		</xs:complexContent>
 	</xs:complexType>
