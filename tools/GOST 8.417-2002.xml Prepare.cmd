@@ -1,0 +1,1 @@
+powershell .\Convert-XML.ps1 -Path '..\xml\GOST 8.417-2002.xml' -Destination '..\xml\GOST 8.417-2002 2222.xml' -XSLTLiteralPath UnitSystemPrepare.xslt

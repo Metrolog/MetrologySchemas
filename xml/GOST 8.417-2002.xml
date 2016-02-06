@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <СистемаЕдиницВеличин
 	xmlns="http://csm.nov.ru/schemas/UnitsSystem.xsd"
 	xmlns:v="http://csm.nov.ru/schemas/Value.xsd"

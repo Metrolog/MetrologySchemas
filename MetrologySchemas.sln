@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{D5FED62A-ABFE-4EF4-9599-444AC3021670}"
 	ProjectSection(SolutionItems) = preProject
@@ -21,11 +21,19 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "xml", "xml", "{AA1E5BE8-FA8
 		xml\QuantityValue.xml = xml\QuantityValue.xml
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tools", "tools", "{DD75EBD6-9DD2-4A70-B728-506BBAA90261}"
+	ProjectSection(SolutionItems) = preProject
+		tools\Convert-XML.ps1 = tools\Convert-XML.ps1
+		tools\GOST 8.417-2002.xml Prepare.cmd = tools\GOST 8.417-2002.xml Prepare.cmd
+		tools\UnitSystemPrepare.xslt = tools\UnitSystemPrepare.xslt
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{AA1E5BE8-FA83-4E6B-9A5A-B6D41655D632} = {D5FED62A-ABFE-4EF4-9599-444AC3021670}
+		{DD75EBD6-9DD2-4A70-B728-506BBAA90261} = {D5FED62A-ABFE-4EF4-9599-444AC3021670}
 	EndGlobalSection
 EndGlobal
