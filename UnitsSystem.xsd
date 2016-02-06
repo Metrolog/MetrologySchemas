@@ -41,7 +41,7 @@
 		</xs:restriction>
 	</xs:simpleType>
 
-	<xs:complexType name="ЭлементСистемыЕдиниц">
+	<xs:complexType name="ЭлементСистемыЕдиниц" abstract="true">
 		<xs:annotation>
 			<xs:documentation xml:lang="ru-ru">Представление описания элемента системы единиц величины в справочнике.</xs:documentation>
 		</xs:annotation>
@@ -66,7 +66,7 @@
 		</xs:sequence>
 	</xs:complexType>
 
-	<xs:complexType name="ЕдиницаВеличины">
+	<xs:complexType name="ЕдиницаВеличиныБазовая" abstract="true">
 		<xs:annotation>
 			<xs:documentation xml:lang="ru-ru">Представление описания единицы величины в справочнике единиц величин, включая взаимосвязи с дольными и кратными единицами величин.</xs:documentation>
 		</xs:annotation>
@@ -82,6 +82,45 @@
 						<xs:documentation xml:lang="ru-ru">Является ли данная единица величины допустимой к применению, временно допустимой, либо недопустимой (по ГОСТ 8.417-2002).</xs:documentation>
 					</xs:annotation>
 				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="ЕдиницаВеличиныКратная">
+		<xs:annotation>
+			<xs:documentation xml:lang="ru-ru">Представление описания кратной / дольной единицы величины в справочнике единиц величин.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="ЕдиницаВеличиныБазовая">
+				<!--<xs:sequence>
+					<xs:element name="Коэффициент" type="v:Коэффициент"/>
+				</xs:sequence>-->
+				<xs:attribute name="Порядок" type="v:Порядок" use="required"/>
+				<xs:attribute name="тип" type="ТипЕдиницыВеличины" use="optional" fixed="кратная"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="ЕдиницаВеличиныКогерентнаяЛибоОсновная">
+		<xs:annotation>
+			<xs:documentation xml:lang="ru-ru">Представление описания основной или когерентной единицы величины в справочнике единиц величин.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="ЕдиницаВеличиныБазовая">
+				<xs:sequence>
+					<xs:element name="КратныеЕдиницыВеличин" minOccurs="0">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="ЕдиницаВеличины" type="ЕдиницаВеличиныКратная" maxOccurs="unbounded">
+								</xs:element>
+							</xs:sequence>
+						</xs:complexType>
+						<xs:unique name="УникальныеПорядкиКратныхЕдиницВеличин">
+							<xs:selector xpath="mstns:ЕдиницаВеличины"/>
+							<xs:field xpath="@Порядок"/>
+						</xs:unique>
+					</xs:element>
+				</xs:sequence>
 			</xs:extension>
 		</xs:complexContent>
 	</xs:complexType>
@@ -105,7 +144,7 @@
 			<xs:element name="ЕдиницыВеличин">
 				<xs:complexType>
 					<xs:sequence>
-						<xs:element name="ЕдиницаВеличины" type="ЕдиницаВеличины" maxOccurs="unbounded"/>
+						<xs:element name="ЕдиницаВеличины" type="ЕдиницаВеличиныКогерентнаяЛибоОсновная" maxOccurs="unbounded"/>
 					</xs:sequence>
 				</xs:complexType>
 				<xs:unique name="УникальныеОбозначенияЕИ">
@@ -125,16 +164,6 @@
 						<xs:element name="ДесятичныйМножитель" type="ДесятичныйМножитель" maxOccurs="unbounded"/>
 					</xs:sequence>
 				</xs:complexType>
-				<xs:unique name="УникальныеОбозначенияПриставокДесятичныхМножителей">
-					<xs:selector xpath="mstns:ДесятичныйМножитель/mstns:ОбозначенияИНаименования/mstns:ОбозначениеИНаименование"/>
-					<xs:field xpath="@lang"/>
-					<xs:field xpath="@Обозначение"/>
-				</xs:unique>
-				<xs:unique name="УникальныеПриставкиДесятичныхМножителей">
-					<xs:selector xpath="mstns:ДесятичныйМножитель/mstns:ОбозначенияИНаименования/mstns:ОбозначениеИНаименование"/>
-					<xs:field xpath="@lang"/>
-					<xs:field xpath="@Наименование"/>
-				</xs:unique>
 			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
@@ -143,6 +172,36 @@
 		<xs:annotation>
 			<xs:documentation xml:lang="ru-ru">Система единиц величин по ГОСТ 8.417.</xs:documentation>
 		</xs:annotation>
+
+		<xs:unique name="ОбозначенияЕдиницВеличин">
+			<xs:selector xpath=".//mstns:ЕдиницаВеличины/mstns:ОбозначенияИНаименования/mstns:ОбозначениеИНаименование"/>
+			<xs:field xpath="@lang"/>
+			<xs:field xpath="@Обозначение"/>
+		</xs:unique>
+		<xs:unique name="НаименованияЕдиницВеличин">
+			<xs:selector xpath=".//mstns:ЕдиницаВеличины/mstns:ОбозначенияИНаименования/mstns:ОбозначениеИНаименование"/>
+			<xs:field xpath="@lang"/>
+			<xs:field xpath="@Наименование"/>
+		</xs:unique>
+		<xs:unique name="ПорядкиДесятичныхМножителей">
+			<xs:selector xpath="mstns:ДесятичныеМножители/mstns:ДесятичныйМножитель"/>
+			<xs:field xpath="@Порядок"/>
+		</xs:unique>
+		<xs:unique name="ОбозначенияПриставокДесятичныхМножителей">
+			<xs:selector xpath="mstns:ДесятичныеМножители/mstns:ДесятичныйМножитель/mstns:ОбозначенияИНаименования/mstns:ОбозначениеИНаименование"/>
+			<xs:field xpath="@lang"/>
+			<xs:field xpath="@Обозначение"/>
+		</xs:unique>
+		<xs:unique name="ПриставкиДесятичныхМножителей">
+			<xs:selector xpath="mstns:ДесятичныеМножители/mstns:ДесятичныйМножитель/mstns:ОбозначенияИНаименования/mstns:ОбозначениеИНаименование"/>
+			<xs:field xpath="@lang"/>
+			<xs:field xpath="@Наименование"/>
+		</xs:unique>
+		
+		<xs:keyref name="ПорядкиКратныхЕдиницВеличин" refer="ПорядкиДесятичныхМножителей">
+			<xs:selector xpath="mstns:ЕдиницыВеличин/mstns:ЕдиницаВеличины/mstns:КратныеЕдиницыВеличин/mstns:ЕдиницаВеличины"/>
+			<xs:field xpath="@Порядок"/>
+		</xs:keyref>
 	</xs:element>
 
 </xs:schema>
